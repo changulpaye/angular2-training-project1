@@ -38,7 +38,6 @@ System.register(['angular2/core', './user.service', 'angular2/http', 'angular2/r
                 };
                 UsersComponent.prototype.deleteUser = function (user) {
                     var _this = this;
-                    user.id = 12;
                     var isUserDelete = confirm("Are you sure you want to delete " + user.name + "?");
                     if (isUserDelete) {
                         var index = this.users.indexOf(user);

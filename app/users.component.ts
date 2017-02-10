@@ -21,7 +21,6 @@ export class UsersComponent implements OnInit {
     }
 
     deleteUser(user : User) {
-       user.id = 12;
        var isUserDelete = confirm("Are you sure you want to delete " + user.name + "?");
        if(isUserDelete) {
             var index = this.users.indexOf(user);
