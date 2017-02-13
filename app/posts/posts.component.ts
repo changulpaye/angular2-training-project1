@@ -2,18 +2,18 @@ import { Component, OnInit } from 'angular2/core';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { PostService } from './post.service';
 import { Posts } from './posts';
-import { SpinnerComponent } from './spinner.component';
+import { SpinnerComponent } from '../shared/spinner.component';
 import { Comments } from './comments';
-import { UserService } from './user.service';
-import { User } from './user';
-import { PaginationComponent } from './pagination.component';
+import { UserService } from '../users/user.service';
+import { User } from '../users/user';
+import { PaginationComponent } from '../shared/pagination.component';
 
 @Component({
     selector: 'posts',
-    templateUrl: 'app/post.component.html',
+    templateUrl: 'app/posts/post.component.html',
     providers: [HTTP_PROVIDERS, PostService, UserService],
     directives: [SpinnerComponent, PaginationComponent],
-    styleUrls: ['app/posts.style.css']
+    styleUrls: ['app/posts/post.style.css']
 })
 export class PostsComponent implements OnInit {
 
@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit {
             .subscribe(
             posts => {
                 this.posts = posts;
-                this.pagedPosts = this.getPostInPage(1);
+                this.pagedPosts = _.take(this.posts, this.pageSize);
             },
             null,
             () => { this.postLoading = false });
@@ -68,29 +68,13 @@ export class PostsComponent implements OnInit {
             () => this.commentLoading = false);
     }
 
-
-
     reloadPosts(filter) {
         this.postLoading = true;
         this.loadPosts(filter);
     }
 
     onPageChanged(page) {
-        this.pagedPosts = this.getPostInPage(page);
-    }
-
-    getPostInPage(page) {
-        var result = [];
         var startingIndex = (page - 1) * this.pageSize;
-        var endingIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
-
-        for(var i = startingIndex; i <  endingIndex; i++) {
-            result.push(this.posts[i]);
-        }
-        return result;
-
+        this.pagedPosts = _.take(_.rest(this.posts, startingIndex), this.pageSize);
     }
-
-
-
 }

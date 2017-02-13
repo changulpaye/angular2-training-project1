@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', './email.validator', 'angular2/router', './user.service', 'angular2/http', './user'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', '../shared/email.validator', 'angular2/router', './user.service', 'angular2/http', './user'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -90,7 +90,7 @@ System.register(['angular2/core', 'angular2/common', './email.validator', 'angul
                 AddUserFormComponent = __decorate([
                     core_1.Component({
                         selector: 'add-user',
-                        templateUrl: 'app/add-user-form-component.html',
+                        templateUrl: 'app/users/add-user-form-component.html',
                         providers: [http_1.HTTP_PROVIDERS, user_service_1.UserService]
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder, user_service_1.UserService, router_1.RouteParams, router_1.Router])

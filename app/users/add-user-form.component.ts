@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from 'angular2/core';
 import { FormBuilder, ControlGroup, Validators } from 'angular2/common';
-import { EmailValidator } from './email.validator';
+import { EmailValidator } from '../shared/email.validator';
 import { CanDeactivate, Router, RouteParams } from 'angular2/router';
 import { UserService } from './user.service';
 import { HTTP_PROVIDERS} from 'angular2/http'
@@ -8,7 +8,7 @@ import { User } from './user'
 
 @Component({
     selector: 'add-user',
-    templateUrl: 'app/add-user-form-component.html',
+    templateUrl: 'app/users/add-user-form-component.html',
     providers: [HTTP_PROVIDERS, UserService]
 })
 export class AddUserFormComponent implements CanDeactivate, OnInit {

@@ -1,4 +1,4 @@
-System.register(['angular2/core', './navbar.component', './home.coponent', './posts.component', './users.component', 'angular2/router', './add-user-form.component', './not-found.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './navbar.component', './home.coponent', './posts/posts.component', './users/users.component', 'angular2/router', './users/add-user-form.component', './not-found.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {

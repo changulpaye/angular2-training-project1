@@ -63,7 +63,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 PaginationComponent = __decorate([
                     core_1.Component({
                         selector: 'pagination',
-                        templateUrl: 'app/pagination.component.html'
+                        templateUrl: 'app/shared/pagination.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], PaginationComponent);

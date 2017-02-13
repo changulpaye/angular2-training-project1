@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', './post.service', './spinner.component', './user.service', './pagination.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', './post.service', '../shared/spinner.component', '../users/user.service', '../shared/pagination.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -51,7 +51,7 @@ System.register(['angular2/core', 'angular2/http', './post.service', './spinner.
                     this._postService.getPosts(filter)
                         .subscribe(function (posts) {
                         _this.posts = posts;
-                        _this.pagedPosts = _this.getPostInPage(1);
+                        _this.pagedPosts = _.take(_this.posts, _this.pageSize);
                     }, null, function () { _this.postLoading = false; });
                 };
                 PostsComponent.prototype.loadUsers = function () {
@@ -75,24 +75,16 @@ System.register(['angular2/core', 'angular2/http', './post.service', './spinner.
                     this.loadPosts(filter);
                 };
                 PostsComponent.prototype.onPageChanged = function (page) {
-                    this.pagedPosts = this.getPostInPage(page);
-                };
-                PostsComponent.prototype.getPostInPage = function (page) {
-                    var result = [];
                     var startingIndex = (page - 1) * this.pageSize;
-                    var endingIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
-                    for (var i = startingIndex; i < endingIndex; i++) {
-                        result.push(this.posts[i]);
-                    }
-                    return result;
+                    this.pagedPosts = _.take(_.rest(this.posts, startingIndex), this.pageSize);
                 };
                 PostsComponent = __decorate([
                     core_1.Component({
                         selector: 'posts',
-                        templateUrl: 'app/post.component.html',
+                        templateUrl: 'app/posts/post.component.html',
                         providers: [http_1.HTTP_PROVIDERS, post_service_1.PostService, user_service_1.UserService],
                         directives: [spinner_component_1.SpinnerComponent, pagination_component_1.PaginationComponent],
-                        styleUrls: ['app/posts.style.css']
+                        styleUrls: ['app/posts/post.style.css']
                     }), 
                     __metadata('design:paramtypes', [post_service_1.PostService, user_service_1.UserService])
                 ], PostsComponent);

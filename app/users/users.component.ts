@@ -6,7 +6,7 @@ import { User} from './user'
 
 @Component({
     selector: 'users',
-    templateUrl : 'app/users.component.html',
+    templateUrl : 'app/users/users.component.html',
     providers : [HTTP_PROVIDERS, UserService],
     directives : [ROUTER_DIRECTIVES]
 })
