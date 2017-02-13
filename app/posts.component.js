@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', './post.service', './spinner.component', './user.service', './pagination.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,23 +10,91 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, http_1, post_service_1, spinner_component_1, user_service_1, pagination_component_1;
     var PostsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
+            function (post_service_1_1) {
+                post_service_1 = post_service_1_1;
+            },
+            function (spinner_component_1_1) {
+                spinner_component_1 = spinner_component_1_1;
+            },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
+            },
+            function (pagination_component_1_1) {
+                pagination_component_1 = pagination_component_1_1;
             }],
         execute: function() {
             PostsComponent = (function () {
-                function PostsComponent() {
+                function PostsComponent(_postService, _userService) {
+                    this._postService = _postService;
+                    this._userService = _userService;
+                    this.posts = [];
+                    this.pagedPosts = [];
+                    this.pageSize = 10;
                 }
+                PostsComponent.prototype.ngOnInit = function () {
+                    this.loadUsers();
+                    this.loadPosts();
+                };
+                PostsComponent.prototype.loadPosts = function (filter) {
+                    var _this = this;
+                    this.postLoading = true;
+                    this._postService.getPosts(filter)
+                        .subscribe(function (posts) {
+                        _this.posts = posts;
+                        _this.pagedPosts = _this.getPostInPage(1);
+                    }, null, function () { _this.postLoading = false; });
+                };
+                PostsComponent.prototype.loadUsers = function () {
+                    var _this = this;
+                    this._userService.getUsers()
+                        .subscribe(function (users) { return _this.users = users; });
+                };
+                PostsComponent.prototype.showPostDetail = function (post) {
+                    this.currentPost = post;
+                    this.getComments(post.id);
+                };
+                PostsComponent.prototype.getComments = function (id) {
+                    var _this = this;
+                    this.commentLoading = true;
+                    this.comments = null;
+                    this._postService.getComments(id)
+                        .subscribe(function (comments) { return _this.comments = comments; }, null, function () { return _this.commentLoading = false; });
+                };
+                PostsComponent.prototype.reloadPosts = function (filter) {
+                    this.postLoading = true;
+                    this.loadPosts(filter);
+                };
+                PostsComponent.prototype.onPageChanged = function (page) {
+                    this.pagedPosts = this.getPostInPage(page);
+                };
+                PostsComponent.prototype.getPostInPage = function (page) {
+                    var result = [];
+                    var startingIndex = (page - 1) * this.pageSize;
+                    var endingIndex = Math.min(startingIndex + this.pageSize, this.posts.length);
+                    for (var i = startingIndex; i < endingIndex; i++) {
+                        result.push(this.posts[i]);
+                    }
+                    return result;
+                };
                 PostsComponent = __decorate([
                     core_1.Component({
                         selector: 'posts',
-                        template: "<h2>Posts</h2>"
+                        templateUrl: 'app/post.component.html',
+                        providers: [http_1.HTTP_PROVIDERS, post_service_1.PostService, user_service_1.UserService],
+                        directives: [spinner_component_1.SpinnerComponent, pagination_component_1.PaginationComponent],
+                        styleUrls: ['app/posts.style.css']
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [post_service_1.PostService, user_service_1.UserService])
                 ], PostsComponent);
                 return PostsComponent;
             }());
